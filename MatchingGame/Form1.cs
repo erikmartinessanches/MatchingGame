@@ -76,6 +76,7 @@ namespace MatchingGame
                 // Set its color to black.
                 secondClicked = clickedLabel;
                 secondClicked.ForeColor = Color.Black;
+                CheckForWinner();
                 if(firstClicked.Text == secondClicked.Text)
                 {
                     firstClicked = null;
@@ -101,6 +102,30 @@ namespace MatchingGame
             // clicked, the program knows it's the first click
             firstClicked = null;
             secondClicked = null;
+        }
+        /// <summary>
+        /// Check every icon to see if it is matched, by 
+        /// comparing its foreground color to its background color. 
+        /// If all of the icons are matched, the player wins.
+        /// </summary>
+        private void CheckForWinner()
+        {
+            foreach(Control control in tableLayoutPanel1.Controls)
+            {
+                Label iconLabel = control as Label;
+                if(iconLabel != null)
+                {
+                    if (iconLabel.ForeColor == iconLabel.BackColor)
+                    {
+                        return; //so does this drop us out of the foreach and not the method?
+                    }
+                }
+            }
+            // If the loop didn’t return, it didn't find
+            // any unmatched icons.
+            // That means the user won. Show a message and close the form.
+            MessageBox.Show("You matched them all!","Congrats");
+            Close();
         }
     }
 }
