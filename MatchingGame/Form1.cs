@@ -16,6 +16,7 @@ namespace MatchingGame
         List<string> icons = new List<string>() { "!", "!", "N", "N", ",", ",", "k", "k", "b", "b", "v", "v", "w", "w", "z", "z" };
         Label firstClicked = null;
         Label secondClicked = null;
+        int clickCounter = 0;
         
         public Form1()
         {
@@ -68,6 +69,7 @@ namespace MatchingGame
                 {
                     firstClicked = clickedLabel;
                     firstClicked.ForeColor = Color.Black;
+                    clickCounter++;
                     return;
                 }
                 // If the player gets this far, the timer isn't
@@ -76,6 +78,7 @@ namespace MatchingGame
                 // Set its color to black.
                 secondClicked = clickedLabel;
                 secondClicked.ForeColor = Color.Black;
+                clickCounter++;
                 CheckForWinner();
                 if(firstClicked.Text == secondClicked.Text)
                 {
@@ -115,16 +118,16 @@ namespace MatchingGame
                 Label iconLabel = control as Label;
                 if(iconLabel != null)
                 {
-                    if (iconLabel.ForeColor == iconLabel.BackColor)
+                    if (iconLabel.ForeColor == iconLabel.BackColor) //See if there are invisible icons left, in which case we aren't finished with the game.
                     {
-                        return; //so does this drop us out of the foreach and not the method?
+                        return; //Drops us out of the method.
                     }
                 }
             }
             // If the loop didn’t return, it didn't find
             // any unmatched icons.
             // That means the user won. Show a message and close the form.
-            MessageBox.Show("You matched them all!","Congrats");
+            MessageBox.Show("You matched them all! Number of clicks: " + clickCounter + ".", "Congrats");
             Close();
         }
     }
