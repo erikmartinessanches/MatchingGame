@@ -76,6 +76,12 @@ namespace MatchingGame
                 // Set its color to black.
                 secondClicked = clickedLabel;
                 secondClicked.ForeColor = Color.Black;
+                if(firstClicked.Text == secondClicked.Text)
+                {
+                    firstClicked = null;
+                    secondClicked = null;
+                    return;
+                }
                 // If the player gets this far, the player 
                 // clicked two different icons, so start the 
                 // timer (which will wait three quarters of 
