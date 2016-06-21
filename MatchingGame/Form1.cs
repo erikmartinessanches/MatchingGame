@@ -69,6 +69,7 @@ namespace MatchingGame
                 {
                     firstClicked = clickedLabel;
                     firstClicked.ForeColor = Color.Black;
+                    timer2.Start();
                     clickCounter++;
                     return;
                 }
@@ -78,6 +79,7 @@ namespace MatchingGame
                 // Set its color to black.
                 secondClicked = clickedLabel;
                 secondClicked.ForeColor = Color.Black;
+                timer2.Stop(); //stop timer2 because we've now selected two icons and want to prevent timer2_Tick event from happening.
                 clickCounter++;
                 CheckForWinner();
                 if(firstClicked.Text == secondClicked.Text)
@@ -129,6 +131,19 @@ namespace MatchingGame
             // That means the user won. Show a message and close the form.
             MessageBox.Show("You matched them all! Number of clicks: " + clickCounter + ".", "Congrats");
             Close();
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            //Stops timer immediatly on first tick (one shot mode).
+            timer2.Stop();
+            //Hide firstClicked if we haven't assigned secondClicked.
+            if (secondClicked == null)
+            {
+                firstClicked.ForeColor = firstClicked.BackColor;
+                //Remove reference to firstClicked.
+                firstClicked = null;
+            }
         }
     }
 }
